@@ -19,7 +19,8 @@ class ResettingController extends \FOS\UserBundle\Controller\ResettingController
      *  section="Resetting password",
      *  description="Request reset user password: send email to user",
      *  parameters={
-     *      {"name"="email", "dataType"="string", "required"=true, "description"="Email"}
+     *      {"name"="email", "dataType"="string", "required"=true, "description"="Email"},
+     *      {"name"="url", "dataType"="string", "required"=true, "description"="url"}
      *  },
      *  views = {"default"},
      *  statusCodes={
@@ -40,7 +41,7 @@ class ResettingController extends \FOS\UserBundle\Controller\ResettingController
     public function sendEmailAction(Request $request)
     {
         $email = $request->request->get('email');
-
+        $url = $request->request->get('url');
         /** @var User $user */
         $user = $this->get('fos_user.user_manager')->findUserByEmail($email);
         if (null === $user) {
@@ -62,7 +63,7 @@ class ResettingController extends \FOS\UserBundle\Controller\ResettingController
         $from = $this->getParameter('mailer_email');
         $this->get('mailer')->sendEmail($user->getEmail(), $from, 'Abodoo - password reset', $template, [
             'user' => $user,
-            'confirmationUrl' => '/auth/confirmpassword/' . $user->getConfirmationToken(),
+            'confirmationUrl' => $url .'/auth/confirmpassword/' . $user->getConfirmationToken(),
         ]);
 
         $user->setPasswordRequestedAt(new \DateTime());
