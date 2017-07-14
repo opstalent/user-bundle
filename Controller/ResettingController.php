@@ -63,7 +63,7 @@ class ResettingController extends \FOS\UserBundle\Controller\ResettingController
         $from = $this->getParameter('mailer_email');
         $this->get('mailer')->sendEmail($user->getEmail(), $from, 'Abodoo - password reset', $template, [
             'user' => $user,
-            'confirmationUrl' => $url .'/' . $user->getConfirmationToken(),
+            'confirmationUrl' => $url . '/' . $user->getConfirmationToken(),
         ]);
 
         $user->setPasswordRequestedAt(new \DateTime());
@@ -121,8 +121,8 @@ class ResettingController extends \FOS\UserBundle\Controller\ResettingController
         }
 
         if ($form->isValid()) {
+            $user->setPasswordRequestedAt(null);
             $userManager->updateUser($user);
-
             return new JsonResponse([
                 'success' => true,
             ]);
