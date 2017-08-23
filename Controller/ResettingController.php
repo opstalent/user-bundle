@@ -50,7 +50,7 @@ class ResettingController extends \FOS\UserBundle\Controller\ResettingController
 
         $ttlToken = $this->container->getParameter('fos_user.resetting.token_ttl');
         if ($user->isPasswordRequestNonExpired($ttlToken)) {
-            throw new \Exception('password.already.requested', 403);
+            throw new \Exception('password.already.requested', 400);
         }
 
         if (null === $user->getConfirmationToken()) {
