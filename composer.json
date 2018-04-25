@@ -1,5 +1,5 @@
 {
-  "name" : "opstalent/userbundle",
+  "name" : "ops-talent/userbundle",
   "description" : "fos user bundle modification",
   "type" : "symfony-bundle",
   "authors" : [
